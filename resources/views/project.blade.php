@@ -91,7 +91,7 @@
     	background-color: #00802b;
     }
     	#bg-color{
-    		background-color: #00ff55;
+    		background-color: #98FB98;
     	}
     	.wrap{
     		padding-top: 30px;

@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/feedback', function () {
-    return view('project');
+    return view('test');
 });
 
 //Route::get('intervention-resizeImage',['as'=>'intervention.getresizeimage','uses'=>'FileController@getResizeImage']);

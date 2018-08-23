@@ -106,11 +106,11 @@
 				<div id="add_app">
 					<div class="form-group">
 						Name of the Project:
- 							<input class="form-control" type="text" name="name" required="" />		
+ 							<input class="form-control" type="text" name="projectname" required="" />		
  					</div>
  					<div class="form-group">
     					No. of Participants:
-        					<input  class="form-control" type="text" id="nochapter" required="" /><br>
+        					<input  class="form-control" type="text" id="nochapter" required="" name="participant"/><br>
         					<!--<input class="cleartext"type="text" id="nochapter" />-->
         					<input class= "goback" type="button" value="Enter" onclick="generate()" required="" />
         					<!--<button type="submit" class="btn btn-primary" onclick="generate()">Enter</button>-->
@@ -120,7 +120,7 @@
         			</div>
     				<div class="form-group">
  						Category:
- 							<select class ="form-control" id="course">
+ 							<select class ="form-control" id="course" name="category">
  								<option select="selected">Select a category </option>
   								<option value="BE">B.E</option>
     							<option value="Mini">Mini</option>
@@ -130,15 +130,25 @@
     				</div>
     				<div class="form-group"><br>
                     Project Photo:
-
-                    <div class="input-group control-group increment" >
-                        <input type="file" name="filename[]" class="form-control">
-                            <div class="input-group-btn"> 
-                                <button class="btn btn-success" type="button">
+                     <button class="btn btn-success" type="button">
                                     <i class="glyphicon glyphicon-plus"></i>Add
                                 </button>
+
+
+                    <div class="input-group control-group " >
+
+                       
+                        <input type="file" name="filename[]" class="form-control">
+
+                            <div class="input-group-btn"> 
+                                
+                                <button class="btn btn-danger" type="button">
+                                        <i class="glyphicon glyphicon-remove"></i> Remove
+                                    </button>
+
                             </div>
                     </div>
+                    <div class="increment"></div>
                     <div class="clone hide">
                         <div class="control-group input-group" style="margin-top:10px">
                             <input type="file" name="filename[]" class="form-control">
@@ -157,7 +167,7 @@
 					<div class="form-group"><br>
 
 						Description:
-							<textarea class="form-control" name="comment" id="comments">
+							<textarea class="form-control" name="description" id="comments">
 							</textarea>
 					</div>
 
