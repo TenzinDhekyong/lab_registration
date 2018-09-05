@@ -24,21 +24,32 @@
 
     });
 
-
-
- 	
  	function generate() 
     {
 
         var a = parseInt($("#nochapter").val());
-        var ch = document.getElementById("ch");
+        //var ch = document.getElementById("ch");
+        $("#ch").append("Name of the participants:");
 
         for (i = 0; i <a; i++) 
         {
             var input = document.createElement("input");
+             $("#ch").append("<br>");
+
             ch.appendChild(input);
 
         }
+        var inpObj = document.getElementById("#nochapter");
+    if (!inpObj.checkValidity()) 
+    {
+        document.getElementById("ch").innerHTML = inpObj.validationMessage;
+    } else {
+    document.getElementById("#nochapter").innerHTML = generate();
+
+    } 
+        
+
+        
     }
     
    $(document).ready(function()
@@ -91,7 +102,7 @@
     	background-color: #00802b;
     }
     	#bg-color{
-    		background-color: #00ff55;
+    		background-color: #98FB98;
     	}
     	.wrap{
     		padding-top: 30px;
@@ -102,46 +113,96 @@
 <body id="back">
 	<h1 align="center">Project Details</h1><br>
 
+@if(count($errors))
+
+            <div class="alert alert-danger">
+
+                <strong>try again</strong> There were some problems with your input.
+
+                <br/>
+
+                <ul>
+
+                    @foreach($errors->all() as $error)
+
+                    <li>{{ $error }}</li>
+
+                    @endforeach
+
+                </ul>
+
+            </div>
+
+@endif
+@if(count($errors)>0)
+        @foreach($errors->all() as $error)
+
+            <div class="alert alert-danger">
+                {{$error}}
+            </div>
+        @endforeach
+        @if(session('success'))
+            <div class="alert alert-success">
+
+                {{session('success')}}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger">
+
+                {{session('error')}}
+            </div>
+        @endif
 	<div class ="container" id="bg-color">
 		<form   action= "/storedata " enctype="multipart/form-data" method="post" id="Repeat" 
          style="padding-left: 20px;">
 			
 			{{ csrf_field() }}
+        
 				<div id="add_app">
-					<div class="form-group">
+					<div class="form-group" {{ $errors->has('details') ? 'has-error' : '' }}">>
 						Name of the Project:
- 							<input class="form-control" type="text" name="name" required="" />		
+ 							<input class="form-control" type="text" name="projectname" required="" />
+                            <span class="text-danger">{{ $errors->first('Name of the Project') }}</span>		
  					</div>
- 					<div class="form-group">
+ 					<div class="form-group"{{ $errors->has('details') ? 'has-error' : '' }}">
     					No. of Participants:
-        					<input  class="form-control" type="text" id="nochapter" required="" /><br>
-        					<!--<input class="cleartext"type="text" id="nochapter" />-->
-        					<input class= "goback" type="button" value="Enter" onclick="generate()" required="" />
-        					<!--<button type="submit" class="btn btn-primary" onclick="generate()">Enter</button>-->
-       						<div id="ch">
-        	
-        					</div>
+        					
+                            <input  class="form-control" type="number"  id="nochapter"  required="" name="participant"/><br>
+                           
+                            <input   class= "goback"  type="button" value="Enter" onclick="generate()" required="" />
+                            <span class="text-danger">{{ $errors->first('No. of Participants ') }}</span>
+                           
+                            <div id="ch">
+                               
+                            </div>
         			</div>
-    				<div class="form-group">
+    				<div class="form-group"{{ $errors->has('details') ? 'has-error' : '' }}">
  						Category:
- 							<select class ="form-control" id="course" name="selectlist">
+ 							<select class ="form-control" id="course" name="category" required="">
  								<option select="selected">Select a category </option>
   								<option value="BE">B.E</option>
     							<option value="Mini">Mini</option>
     							<option value="Course">Course</option>
     							<option value="Other">Other</option>
     						</select>
+                            <span class="text-danger">{{ $errors->first('Category ') }}</span>
     				</div>
-    	           <div class="form-group"><br>
+    	           <div class="form-group"{{ $errors->has('details') ? 'has-error' : '' }}"><br>
 
 						Description:
-							<textarea class="form-control" name="comment" id="comments">
+							<textarea class="form-control" name="description" id="comments" required="">
 							</textarea>
+                            <span class="text-danger">{{ $errors->first('Description') }}</span>
 					</div>
 
 				</div>
-					
-		<div id="clone" class="container">
+                <div class="wrap">
+                    <button type="submit" class="btn btn-dark" >Submit</button>
+                        <!--<input type="submit" value="Submit">-->
+                </div>	  
+    </form>	
+    <div id="clone" class="container">
                 <div clas="form-row">
                     <div class="col-md-10">
                         <input type="button" value="ADD" onclick="clone()" />
@@ -151,14 +212,7 @@
                     </div>
                     
                 </div>  
-        </div>  	
-            
-		  <div class="wrap">
-			<button type="submit" class="btn btn-dark" >Submit</button>
-						<!--<input type="submit" value="Submit">-->
-		  </div>
-
-    </form>	
+    </div>  
 </div>
 </body>
 <html>

@@ -1,33 +1,54 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
+use App\project_dtls;
+use Log;
 class SubmitController extends Controller
 {
     public function create()
     {
-    	return view();
+    	return view('test');
     }
-    public function store(Request $request)
+// public function validate()
+
+//    {
+      // $this->validate(request(),[
+       //   'projectname' => 'required|unique:storedata,projectname',
+       // 'participant' => 'required|numeric',
+      // 'category' => 'required',
+     //      //     'filename.*' => 'required',
+     //   'description' => 'required'
+     // ]);
+// }
+    public function store()
     {
-    	$this->validate($request,[
-    		'projectname' => 'required',
-    		'participant'  => 'required',
-    		'category'  => 'required',
-    		'photo'  => 'required',
-    		'description' => 'required'
-    	]);
-    $post= new Submit;
-    $post->projectname = $request->input('projectname');
-    $post->participant = $request->input('participant');
-    $post->category = $request->input('category');
-    $post->photo = $request->input('photo');
-    $post->description = $request->input('description');
-    $post->save();
+       // $this->validate(request(),[
+       //   'projectname' => 'required|unique:storedata,projectname',
+       // 'participant' => 'required|numeric',
+      // 'category' => 'required',
+     //      //     'filename.*' => 'required',
+     //   'description' => 'required'
+     // ]);
 
-    return redirect('/storedata')->with('success','form submitted');
+        //dd(request()->all());
+         $storedata= new project_dtls;
+        Log::info('in submitcontroller');
+        $fileimages=request('filename');
+        foreach($fileimages as $saveimage)
+        {
+            
+            $storedata->image = $saveimage;
+        }
+        
+    	$storedata->projectname = request('projectname');
+    	$storedata->participant = request('participant');
+    	$storedata->category = request('category');
 
+
+    	//$storedata->image = request('filename');
+    	$storedata->description = request('description');
+        $storedata->save();
+       // return view('feedback.success');
+      return redirect()->back()->with('message','Thank you for submitting');
     }
 }

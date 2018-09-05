@@ -8,33 +8,34 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   	<title>project details</title>
-	
-
  	<script type="text/javascript">
- $(document).ready(function() {
+    $(document).ready(function() 
+    {
 
-      $(".btn-success").click(function(){ 
+      $(".btn-success").click(function()
+      { 
           var html = $(".clone").html();
           $(".increment").after(html);
       });
 
-      $("body").on("click",".btn-danger",function(){ 
+      $("body").on("click",".btn-danger",function()
+      { 
           $(this).parents(".control-group").remove();
       });
 
     });
-
-
- 	
  	function generate() 
     {
 
         var a = parseInt($("#nochapter").val());
-        var ch = document.getElementById("ch");
-
-        for (i = 0; i <a; i++) 
+        //var ch = document.getElementById("ch");
+        $("#ch").append("Name of the participants:");
+        for (i = 0; i<a; i++) 
         {
+            
             var input = document.createElement("input");
+            $("#ch").append("<br>");
+           
             ch.appendChild(input);
 
         }
@@ -44,8 +45,7 @@
     {
     	
     });
-    
-    	
+      	
     function resetfunction()
     {
 
@@ -59,7 +59,7 @@
     {
         $('#add_app').clone().appendTo("#add_app").find(".cleartext").val(" ");
         $('#blah').reset();
-  $('#goback').reset();
+        $('#goback').reset();
     }
 
 
@@ -77,110 +77,127 @@
                         .height(50);
                 }
 
-                reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[0]);
             }
     }
-
-
     </script>
     <style>
     #back{
-    	background-color: #00802b;
+    	background-color: #AFEEEE ;
     }
     	#bg-color{
-    		background-color: #00ff55;
+    		background-color: #87CEFA;
     	}
     	.wrap{
     		padding-top: 30px;
     		text-align: center;
     	}
+        
     </style>
 </head>
 <body id="back">
+    @if(session()->has('message'))
+        <div class="alert alert-success" align="center">
+            {{session()->get('message')}}
+        </div>
+    @endif   
 	<h1 align="center">Project Details</h1><br>
-
 	<div class ="container" id="bg-color">
-		<form   action= " {{ url ('file')}} " enctype="multipart/form-data" method="post" id="Repeat" action="" style="padding-left: 20px;">
+		<form   action= "/storedata/store" enctype="multipart/form-data" method="post" name="alertbox" id="Repeat" style="padding-left: 20px;">
 			
 			{{ csrf_field() }}
-				<div id="add_app">
-					<div class="form-group">
-						Name of the Project:
- 							<input class="form-control" type="text" name="name" required="" />		
- 					</div>
- 					<div class="form-group">
-    					No. of Participants:
-        					<input  class="form-control" type="text" id="nochapter" required="" /><br>
-        					<!--<input class="cleartext"type="text" id="nochapter" />-->
-        					<input class= "goback" type="button" value="Enter" onclick="generate()" required="" />
-        					<!--<button type="submit" class="btn btn-primary" onclick="generate()">Enter</button>-->
-       						<div id="ch">
-        	
+            <div id="add_app">
+				<div class="form-group" >
+					Name of the Project:
+ 						<input class="form-control" type="text" name="projectname" required=""/>	
+                            
+ 				</div>
+ 				<div class="form-group" >
+    				No. of Participants:
+        				<input  class="form-control" type="number" min="1" max="10" id="nochapter" name="participant"required=""/><br>
+        					
+        				<input   class= "goback" type="button" value="Enter" onclick="generate()"  required=""/>
+        					 
+       					    <div id="ch" class="break">
+        	                   <p> </p>
         					</div>
-        			</div>
-    				<div class="form-group">
- 						Category:
- 							<select class ="form-control" id="course">
- 								<option select="selected">Select a category </option>
-  								<option value="BE">B.E</option>
-    							<option value="Mini">Mini</option>
-    							<option value="Course">Course</option>
-    							<option value="Other">Other</option>
-    						</select>
-    				</div>
-    				<div class="form-group"><br>
+                          
+        		</div>
+    			<div class="form-group">
+ 					Category:
+ 						<select class ="form-control" id="course" name="category" >
+ 							<option select="selected"required="">Select a category </option>
+  							<option value="BE">B.E</option>
+    						<option value="Mini">Mini</option>
+    						<option value="Course">Course</option>
+    						<option value="Other">Other</option>
+    					</select>
+                            
+    			</div>
+    			<div class="form-group"><br>
                     Project Photo:
+                        <button class="btn btn-primary" type="button" >
+                            <i class="glyphicon glyphicon-plus"></i>Add
+                        </button>
+                <div class="input-group control-group " >
+                    <input type="file" name="filename[]" class="form-control" required="">
+                        <div class="input-group-btn">  
+                            <button class="btn btn-primary" type="button">
+                                <i class="glyphicon glyphicon-remove"></i> Remove
+                            </button>
 
-                    <div class="input-group control-group increment" >
+                        </div>
+                </div>
+                <div class="increment">
+                </div>
+                <div class="clone hide">
+                    <div class="control-group input-group" style="margin-top:10px">
                         <input type="file" name="filename[]" class="form-control">
                             <div class="input-group-btn"> 
-                                <button class="btn btn-success" type="button">
-                                    <i class="glyphicon glyphicon-plus"></i>Add
-                                </button>
-                            </div>
-                    </div>
-                    <div class="clone hide">
-                        <div class="control-group input-group" style="margin-top:10px">
-                            <input type="file" name="filename[]" class="form-control">
-                                <div class="input-group-btn"> 
-                                    <button class="btn btn-danger" type="button">
+                                    <button class="btn btn-primary" type="button">
                                         <i class="glyphicon glyphicon-remove"></i> Remove
                                     </button>
-                                </div>
-                        </div>
-                    </div> 
+                            </div>
+                    </div>
+                </div> 
                     <!--<div class="form-group"> 
                         <button type="submit" class="btn btn-success" style="margin-top:10px">Upload Image
                         </button>
                     </div>-->
-                    </div>  
-					<div class="form-group"><br>
+                    
+                </div>  
+				<div class="form-group"><br>
 
-						Description:
-							<textarea class="form-control" name="comment" id="comments">
-							</textarea>
-					</div>
+					Description:
+						<textarea class="form-control" name="description" id="comments" >
+                           
+						</textarea>
+                            
+				</div>
 
-					</div>
+			</div>
 					
-		</form>	
-	</div>
-			<div id="clone" class="container">
- 				<div clas="form-row">
- 					<div class="col-md-10">
- 						<input type="button" value="ADD" onclick="clone()" />
- 						</div>
- 						<div class="col-md-2">
-						<input type="button" value="CLEAR" onclick="resetfunction()" /><br>
-					</div>
-					
-				</div>	
-			</div>	
-            
-		<div class="wrap">
-			<button type="submit" class="btn btn-dark" >Submit</button>
-						<!--<input type="submit" value="Submit">-->
-		</div>	
+                <div class="wrap">
+                        
+                    <button type="submit" class="btn btn-primary" >Submit</button>
+                        <!--<input type="submit" value="Submit">-->
+                </div>  
+
+           @include('layouts.errors')
+    </div>
+        <div id="clone" class="container">
+            <div clas="form-row">
+                <div class="col-md-10">
+                    <input type="button" value="ADD" onclick="clone()" />
+                </div>
+                <div class="col-md-2">
+                    <input type="button" value="CLEAR" onclick="resetfunction()" /><br>
+                </div>
+                    
+            </div>  
+        </div>  
+	</form>	
+      		
 </body>
 <html>
 

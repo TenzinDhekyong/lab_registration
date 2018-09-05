@@ -1,10 +1,11 @@
+
 <?php
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubmitTable extends Migration
+class CreateProjectDtls extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +14,14 @@ class CreateSubmitTable extends Migration
      */
     public function up()
     {
-        Schema::create('submit', function (Blueprint $table) 
+        Schema::create('project_dtls', function (Blueprint $table) 
         {
             $table->increments('id');
              $table->string('projectname');
               $table->string('participant');
                $table->string('category');
-                $table->string('image');
-                $table->string('description');
+                $table->string('image')->nullable();
+                 $table->string('description');
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateSubmitTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('submit');
+        Schema::dropIfExists('project_dtls');
     }
 }
